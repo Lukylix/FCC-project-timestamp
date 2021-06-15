@@ -33,10 +33,10 @@ app.get("/api", (req, res) => {
 app.get("/api/:time", (req, res) => {
   let time = req.params.time.match(/^[0-9]+$/) ? parseInt(req.params.time) : req.params.time;
   let date = new Date(time);
-  // 05 October 2011 format
+  
+  // 05 October 2011 format offset
   if (date.getTimezoneOffset() == -120) date = new Date(date.getTime() + Math.abs(date.getTimezoneOffset()) * 60 * 1000);
 
-  console.log(req.params.time, date, date.getTimezoneOffset());
   if (date.toString() === "Invalid Date") return res.json({ error: "Invalid Date" });
   res.json({ unix: date.getTime(), utc: date.toUTCString() });
 });
